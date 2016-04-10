@@ -1,16 +1,22 @@
 <!DOCTYPE html>
-<html>
-<head>
-  <title>Byot</title>
-  <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
-  <%= stylesheet_link_tag  'http://www.x3dom.org/download/x3dom.css' %>
-  <%= javascript_include_tag 'http://www.x3dom.org/download/x3dom.js' %>
-  <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
-  <%= csrf_meta_tags %>
-</head>
-<body>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-<%= yield %>
 
-</body>
+    <title><%= content_for?(:title) ? yield(:title) : "Untitled" %></title>
+
+    <%= stylesheet_link_tag  'http://www.x3dom.org/download/x3dom.css' %>
+    <%= javascript_include_tag 'http://www.x3dom.org/download/x3dom.js' %>
+    <%= stylesheet_link_tag    "application" %>
+    <%= javascript_include_tag "application", 'data-turbolinks-track' => true %>
+    <%= csrf_meta_tags %>
+  </head>
+
+  <body>
+
+    <%= yield %>
+
+  </body>
 </html>

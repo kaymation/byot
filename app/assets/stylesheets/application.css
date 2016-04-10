@@ -12,19 +12,6 @@
  *
  *= require_tree .
  *= require_self
+ *= require foundation_and_overrides
+
  */
-
- x3d {
-   background: #d7f8fc;
- }
-
-.creation_area {
-  /*display: inline;*/
-}
-
-.buttons{
-  width: 50px;
-  top: 90px;
-  height: inherit;
-  float: right;
-}

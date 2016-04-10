@@ -1,12 +1,13 @@
+<title>Build your own Tiki-Pole</title>
 
 <h1>Get ready to build your own tiki pole!</h1>
 
-<div id="creation_area">
-  <div id="3dspace">
+<div id="creation_area" class="row">
+  <div id="3dspace", class="small-12 large-8 column">
 
     <x3d width='700px' height='550px'>
       <scene>
-        <!-- <inline url="/assets/test_tiki_2.x3d"> </inline> -->
+        <inline url="/assets/angry_base.x3d"> </inline>
 
         <PointLight id='point' on='TRUE' intensity='0.9000' color='0.0 0.6 0.0' location='0 10 0.5 ' radius='5.0000' >  </PointLight>
 
@@ -15,8 +16,6 @@
 
   </div>
 
-  <div id="buttons">
-    <button type="button" name="addTiki" id="addTiki">Add Tiki</button>
+    <%= select_tag "tikis", options_from_collection_for_select(@tikis, :object_path, :name) %>
 
-  </div>
 </div>

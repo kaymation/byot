@@ -12,18 +12,21 @@
 //
 //= require jquery
 //= require jquery_ujs
+//= require foundation
 //= require turbolinks
 //= require_tree .
 
 $(function(){
-  $('#addTiki').click(function(event){
-    event.preventDefault();
-    console.log("hello button clicked");
-
-    var baseBlock =  '<inline url="/assets/angry_base.x3d"> </inline>'
+  $('#tikis').change(function(event){
+    console.log("tikichanged");
+    var obj = $('#tikis :selected').val()
+    console.log("attempting to load " + obj);
+    var baseBlock =  '<inline url="/'+ obj + '> </inline>'
 
     $('scene').prepend(baseBlock)
   })
 
 
 });
+
+$(function(){ $(document).foundation(); });
