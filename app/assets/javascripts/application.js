@@ -16,17 +16,56 @@
 //= require turbolinks
 //= require_tree .
 
-$(function(){
-  $('#tikis').change(function(event){
-    console.log("tikichanged");
-    var obj = $('#tikis :selected').val()
-    console.log("attempting to load " + obj);
-    var baseBlock =  '<inline url="/'+ obj + '> </inline>'
+pole = {
+  parts: [
+    {
+      asset: 'assets/angry_base.x3d',
+      height: 3.08445
+    }
+  ],
+  totalHeight: function(){
+    if (this.parts.length == 1){
+      return this.parts[0].height
+    } else {
+      var heights = this.parts.map(function(part){
+        return part.height;
+      });
+      result = heights.reduce(function(a, b){
+        return a + b;
+      });
+      console.log(result);
+      return result;
+    }
+  }
+};
 
-    $('scene').prepend(baseBlock)
+$(function(){
+  $(document).foundation();
+
+  $('#tikis').change(function(event){
+    var obj = $('#tikis :selected').val()
+
+    var nextBlock = elementForTiki(obj);
+
+    $('scene').prepend(nextBlock)
+
+    // console.log($('#tikis :selected').attr('data-height'));
+    var obj_height = parseFloat($('#tikis :selected').attr('data-height'));
+    console.log(obj_height);
+    pole.parts.push({
+      asset: obj,
+      height: obj_height
+    });
+
+    document.getElementById('tikiView').runtime.fitAll();
   })
 
 
 });
 
-$(function(){ $(document).foundation(); });
+var elementForTiki = function(asset) {
+  var openTag = '<transform translation="0 ' + pole.totalHeight() + ' 0"> '
+  var inline = '<inline url="'+ asset +'"></inline>';
+  var closer = '</transform>'
+  return openTag + inline + closer;
+}

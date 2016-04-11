@@ -3,9 +3,9 @@
 <h1>Get ready to build your own tiki pole!</h1>
 
 <div id="creation_area" class="row">
-  <div id="3dspace", class="small-12 large-8 column">
+  <div id="3dspace" class="small-12 large-8 column">
 
-    <x3d width='700px' height='550px'>
+    <x3d id="tikiView" width='700px' height='550px'>
       <scene>
         <inline url="/assets/angry_base.x3d"> </inline>
 
@@ -15,7 +15,11 @@
     </x3d>
 
   </div>
+  <div id="buttons" class="small-12 large-3 column">
 
-    <%= select_tag "tikis", options_from_collection_for_select(@tikis, :object_path, :name) %>
+    <%= select_tag "tikis", options_for_select(@tikis.map{|tiki| [tiki.name, tiki.object_path, { 'data-height' => tiki.height }]}) %>
+    
+  </div>
 
+    </div>
 </div>

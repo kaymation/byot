@@ -11,10 +11,6 @@
 		                type='"EXAMINE", "ANY"'
 		                avatarSize="0.25, 1.75, 0.75"
 		                />
-		<Background DEF="WO_World"
-		            groundColor="0.051 0.051 0.051"
-		            skyColor="0.051 0.051 0.051"
-		            />
 		<Transform DEF="OB_Sphere_ifs_TRANSFORM"
 		           translation="0.037464 2.205766 0.021551"
 		           scale="1.304357 1.304357 0.964823"
