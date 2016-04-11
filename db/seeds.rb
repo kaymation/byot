@@ -5,4 +5,8 @@
 #
 #   cities = City.create([{ name: 'Chicago' }, { name: 'Copenhagen' }])
 #   Mayor.create(name: 'Emanuel', city: cities.first)
-Tiki.create(name: "Angry Base", thumbnail_path: "nil.png", object_path: "assets/angry_base.x3d", height: 3.08445)
+Tiki.create([
+  { name: "Angry Base", thumbnail_path: "nil.png", object_path: "assets/angry_base.x3d", height: 3.08445 },
+  { name: "Stoned Base", thumbnail_path: "nil.png", object_path: "assets/angry_base.x3d", height: 3.12001},
+  { name: "Squinty Birdie", thumbnail_path: "nil.png", object_path: "assets/squinty_birdie.x3d", height: 2.03743}
+  ])
