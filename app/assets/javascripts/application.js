@@ -56,15 +56,27 @@ $(function(){
       asset: obj,
       height: obj_height
     });
-
-    document.getElementById('tikiView').runtime.fitAll();
+    // while($('#tiki-' + pole.parts.length).find('inline').prop('load') != "true"){
+    //
+    // }
+    document.getElementById('tikiView').runtime.showAll();
   })
 
 
+  $('scene').on('load', 'inline', function(event){
+    console.log("nonsenz");
+    document.getElementById('tikiView').runtime.showAll();
+  });
+
 });
 
+$(document).on('downloadsfinished', function(event){
+  document.getElementById('tikiView').runtime.showAll();
+});
+
+
 var elementForTiki = function(asset) {
-  var openTag = '<transform translation="0 ' + pole.totalHeight() + ' 0"> '
+  var openTag = '<transform id="tiki-'+ (pole.parts.length + 1) + '" translation="0 ' + pole.totalHeight() + ' 0"> '
   var inline = '<inline url="'+ asset +'"></inline>';
   var closer = '</transform>'
   return openTag + inline + closer;
