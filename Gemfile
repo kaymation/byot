@@ -55,6 +55,7 @@ group :test do
   gem 'capybara'
   gem 'rspec-rails'
   gem 'selenium-webdriver'
+  gem 'coveralls', require: false
 end
 
 group :production do
