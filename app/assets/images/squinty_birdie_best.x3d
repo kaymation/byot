@@ -10,7 +10,7 @@
 		                visibilityLimit="0.0"
 		                type='"EXAMINE", "ANY"'
 		                avatarSize="0.25, 1.75, 0.75"
-		                />
+		                />	
 		<Transform DEF="OB_Cylinder_002_ifs_TRANSFORM"
 		           translation="-0.051850 1.449644 0.965551"
 		           scale="1.000000 1.000000 0.390093"
