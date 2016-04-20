@@ -34,7 +34,10 @@
       </nav>
       <div class="container">
         <div class="row">
+          <div class="large-8 large-centered small-12 column">
+
           <%= yield %>
+        </div>
 
         </div>
 
@@ -43,12 +46,12 @@
       <script>
       $(document).ready(function(){
         signedInNav();
+        showBases();
       });
       </script>
       <% else %>
       <script>
       $(document).ready(function(){
-        $('#openModal').fadeIn(2000);
         fadeBackground();
       });
       </script>

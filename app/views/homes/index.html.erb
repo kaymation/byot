@@ -1,30 +1,28 @@
 <title>Build your own Tiki-Pole</title>
-<div class="row">
-  <div class="large-12 large-centered column">
-    <h1>Get ready to build your own tiki pole!</h1>
+    <div class="row">
+        <div class="large-12 large-centered column">
+            <h1>Get ready to build your own tiki pole!</h1>
 
-  </div>
+        </div>
 
-</div>
+      </div>
 
-<div id="creation_area" class="row">
-  <div id="3dspace" class="small-12 large-8 column">
+    <div id="creation_area" class="row">
+        <div id="3dspace" class="large-5 column">
+            <x3d id="tikiView" width='400px' height='350px'>
+                <scene>
+                    <PointLight id='point' on='TRUE' intensity='0.9000' color='0.0 0.6 0.0' location='0 10 0.5 ' radius='5.0000'></PointLight>
+                </scene>
+            </x3d>
 
-    <x3d id="tikiView" width='700px' height='550px'>
-      <scene>
-        <!-- <inline name="tiki-1" url="/assets/angry_base.x3d"> </inline> -->
+        </div>
+        <div id="editStack" class="large-3 column">
+          <a href="#" id="newHead" style="display: none;">Add Tiki</a>
+          <ul id="stackList">
 
-        <PointLight id='point' on='TRUE' intensity='0.9000' color='0.0 0.6 0.0' location='0 10 0.5 ' radius='5.0000' >  </PointLight>
-
-      </scene>
-    </x3d>
-
-  </div>
-  <div id="buttons" class="small-12 large-3 column">
-
-    <%= select_tag "tikis", options_for_select(@tikis.map{|tiki| [tiki.name, tiki.object_path, { 'data-height' => tiki.height }]}) %>
-
-  </div>
-
+          </ul>
+        </div>
+        <!-- <div id="buttons" class="small-12 large-3 column">
+            <%= select_tag "tikis", options_for_select(@tikis.map{|tiki| [tiki.name, tiki.object_path, { 'data-height' => tiki.height }]}) %>
+        </div> -->
     </div>
-</div>

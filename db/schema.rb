@@ -11,16 +11,17 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160414211539) do
+ActiveRecord::Schema.define(version: 20160419194931) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
   create_table "tikis", force: :cascade do |t|
-    t.string "name",           null: false
-    t.string "object_path",    null: false
-    t.string "thumbnail_path", null: false
-    t.float  "height",         null: false
+    t.string  "name",                           null: false
+    t.string  "object_path",                    null: false
+    t.string  "thumbnail_path",                 null: false
+    t.float   "height",                         null: false
+    t.boolean "base",           default: false
   end
 
   create_table "users", force: :cascade do |t|

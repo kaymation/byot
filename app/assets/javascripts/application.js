@@ -16,17 +16,16 @@
 //= require turbolinks
 //= require_tree .
 
-pole = {
-    parts: [{
-        asset: 'assets/angry_base.x3d',
-        height: 3.08445
-    }],
+initialPole = {
+    parts: [],
     totalHeight: function() {
-        if (this.parts.length == 1) {
-            return this.parts[0].height
+        if (this.parts.length == 0) {
+            return 0.0;
+        } else if (this.parts.length == 1) {
+            return this.parts[0].height;
         } else {
             var heights = this.parts.map(function(part) {
-                return part.height;
+                return parseFloat(part.height);
             });
             result = heights.reduce(function(a, b) {
                 return a + b;
@@ -37,19 +36,23 @@ pole = {
     }
 };
 
+pole = initialPole;
+
 var grayness = " <div id='grayness' class='modal-overlay js-modal-close'></div>"
 
+var lastGuidance = "<strong class='text-center'>Great! Now click the 'Add Tiki' button to build your pole!</strong> \
+                  <br/><button id='modalClose' class='button blue float-center'>I got it!</button>"
 
 var fadeBackground = function() {
     $('body').append(grayness);
-    $('#grayness').css('opacity', 100);
+    $('#grayness').css('opacity', 100, 'slow');
     $('#openModal').fadeIn(600);
 }
 
 var removeModal = function() {
-  $('#grayness').css('opacity', 0);
-  $('#grayness').remove();
-  $('#openModal').fadeOut(500);
+    $('#grayness').css('opacity', 0);
+    $('#grayness').remove();
+    $('#openModal').fadeOut(500);
 }
 
 
@@ -62,7 +65,7 @@ $(function() {
 
         var nextBlock = elementForTiki(obj);
 
-        $('scene').prepend(nextBlock)
+        $('scene').prepend(nextBlock);
 
         // console.log($('#tikis :selected').attr('data-height'));
         var obj_height = parseFloat($('#tikis :selected').attr('data-height'));
@@ -90,7 +93,7 @@ $(function() {
         });
     });
 
-    $('#signUpFromLogin').click(function(e) {
+    $('#openModal').on('click', '#signUpFromLogin', function(e) {
         e.preventDefault();
 
         var request = $.ajax({
@@ -108,6 +111,10 @@ $(function() {
         });
     });
 
+    $('#openModal').on('click', '#signInFromRegister', function(e) {
+        getSignIn();
+    });
+
     $('#openModal').on('submit', 'form#new_user', function(event) {
         event.preventDefault();
         console.log("submit clicked");
@@ -118,28 +125,31 @@ $(function() {
         };
 
         var request = $.ajax({
-          type: 'POST',
-          url: '/users',
-          beforeSend: function(xhr) {xhr.setRequestHeader('X-CSRF-Token', $('meta[name="csrf-token"]').attr('content'))},
-          data: {
-            user: body
-          }
+            type: 'POST',
+            url: '/users',
+            beforeSend: function(xhr) {
+                xhr.setRequestHeader('X-CSRF-Token', $('meta[name="csrf-token"]').attr('content'))
+            },
+            data: {
+                user: body
+            }
         });
 
         request.done(function(data) {
-          if(data.success != true){
-            data.errors.forEach(function(error) {
-              $('#openModal').prepend(error)
-            });
-          }else {
-            var emailLink = $('#appendEmailHere').find('a');
-            if(!emailLink.text().match(data.email)){
-              emailLink.prepend(data.email);
+            if (data.success != true) {
+                data.errors.forEach(function(error) {
+                    $('#openModal').prepend(error)
+                });
+            } else {
+                var emailLink = $('#appendEmailHere').find('a');
+                if (!emailLink.text().match(data.email)) {
+                    emailLink.prepend(data.email);
 
+                }
+                removeModal();
+                signedInNav();
+                showBases();
             }
-            removeModal();
-            signedInNav();
-          }
         });
     });
 
@@ -152,43 +162,88 @@ $(function() {
         };
 
         var request = $.ajax({
-          type: 'POST',
-          url: '/users/sign_in',
-          beforeSend: function(xhr) {xhr.setRequestHeader('X-CSRF-Token', $('meta[name="csrf-token"]').attr('content'))},
-          data: {
-            user: body
-          }
+            type: 'POST',
+            url: '/users/sign_in',
+            beforeSend: function(xhr) {
+                xhr.setRequestHeader('X-CSRF-Token', $('meta[name="csrf-token"]').attr('content'))
+            },
+            data: {
+                user: body
+            }
         });
 
         request.done(function(data) {
-          if(data.success != true){
-            data.errors.forEach(function(error) {
-              $('#openModal').prepend(error)
-            });
-          }else {
-            var emailLink = $('#appendEmailHere').find('a');
-            if(!emailLink.text().match(data.email)){
-              emailLink.prepend(data.email);
+            if (data.success != true) {
+                data.errors.forEach(function(error) {
+                    $('#openModal').prepend(error)
+                });
+            } else {
+                var emailLink = $('#appendEmailHere').find('a');
+                if (!emailLink.text().match(data.email)) {
+                    emailLink.prepend(data.email);
 
+                }
+                // removeModal();
+                signedInNav();
+                showBases();
             }
-            removeModal();
-            signedInNav();
-          }
         });
     });
 
-    $('#signOutButton').click(function(){
-      if (confirm('Are you sure you want to sign out?\nAny progress will be lost')){
-        var request = $.ajax({
-          type: 'delete',
-          url: '/users/sign_out'
-        });
+    $('#signOutButton').click(function() {
+        if (confirm('Are you sure you want to sign out?\nAny progress will be lost')) {
+            var request = $.ajax({
+                type: 'delete',
+                url: '/users/sign_out'
+            });
 
-        request.done(function(){
-          fadeBackground();
-          signedOutNav();
+            request.done(function() {
+                getSignIn();
+                signedOutNav();
+            });
+            pole = initialPole;
+            $('scene').html("");
+            $('#stackList').html("");
+        }
+    });
+
+    $('#openModal').on('click', '#modalClose', function(e) {
+        removeModal();
+    });
+
+
+    $('#openModal').on('click', '.base_option', function() {
+        var obj = $(this).find('img').attr('data-obj');
+        var height = $(this).find('img').attr('data-height');
+        var to_prepend = elementForTiki(obj);
+        pole.parts.push({
+            asset: obj,
+            height: height
         });
-      }
+        $('scene').prepend(to_prepend);
+        $('#stackList').prepend("<li>" + $(this).html() + "</li>")
+        $('#newHead').show();
+        $('#openModal').slideUp(function() {
+            $('#openModal').html(lastGuidance);
+        });
+        $('#openModal').slideDown();
+    });
+    $('#openModal').on('click', '.head_option', function() {
+        var obj = $(this).find('img').attr('data-obj');
+        var height = $(this).find('img').attr('data-height');
+        var to_prepend = elementForTiki(obj);
+        pole.parts.push({
+            asset: obj,
+            height: height
+        });
+        $('scene').prepend(to_prepend);
+        $('#stackList').prepend("<li>" + $(this).html() + "</li>")
+        removeModal();
+
+    });
+
+    $('#editStack').on('click', '#newHead', function() {
+      showHeads();
     });
 
     $(window).resize();
@@ -201,20 +256,20 @@ $(document).on('downloadsfinished', function(event) {
 
 $(document).ajaxError(function(e, xhr) {
     if (xhr.status == 401) {
-      if(!$('#openModal').text().match("Invalid email")){
-        $('#openModal').prepend("<span>Invalid email or password</span>");
-      }
+        if (!$('#openModal').text().match("Invalid email")) {
+            $('#openModal').prepend("<span>Invalid email or password</span>");
+        }
     }
 });
 
-var signedInNav = function(){
-  $('#signedInButtons').show('slow');
-  $('#unauthButtons').hide('medium');
+var signedInNav = function() {
+    $('#signedInButtons').show('slow');
+    $('#unauthButtons').hide('medium');
 }
 
-var signedOutNav = function(){
-  $('#signedInButtons').hide('slow');
-  $('#unauthButtons').show('medium');
+var signedOutNav = function() {
+    $('#signedInButtons').hide('slow');
+    $('#unauthButtons').show('medium');
 }
 
 
@@ -224,3 +279,70 @@ var elementForTiki = function(asset) {
     var closer = '</transform>'
     return openTag + inline + closer;
 };
+
+var showBases = function() {
+    var request = $.ajax({
+        url: '/tikis/bases',
+        type: 'GET',
+        format: 'html'
+    });
+    request.done(function(result) {
+        $('#openModal').slideUp(function() {
+
+            $('#openModal').html(result);
+        });
+        // fadeBackground();
+        $('#openModal').slideDown();
+    })
+}
+
+var showHeads = function() {
+  var request = $.ajax({
+      url: '/tikis/heads',
+      type: 'GET',
+      format: 'html'
+  });
+  request.done(function(result) {
+      $('#openModal').slideUp(function() {
+
+          $('#openModal').html(result);
+          $('#openModal').append("<br/><button id='modalClose' class='button blue float-center'>Nevermind</button>");
+      });
+      // fadeBackground();
+      $('#openModal').slideDown();
+  });
+}
+
+var getSignIn = function() {
+    $('body').append(grayness);
+    $('#grayness').css('opacity', 100, 'slow');
+    var request = $.ajax({
+        method: 'GET',
+        url: '/users/sign_in',
+        format: 'html'
+    });
+
+    request.done(function(data) {
+        $('#openModal').slideUp('fast', function() {
+            $('#openModal').html(data);
+
+        });
+        $('#openModal').slideDown();
+    });
+}
+
+var getSignUp = function() {
+    var request = $.ajax({
+        method: 'GET',
+        url: '/users/sign_up',
+        format: 'html'
+    });
+
+    request.done(function(data) {
+        $('#openModal').slideUp('fast', function() {
+            $('#openModal').html(data);
+
+        });
+        $('#openModal').slideDown();
+    });
+}

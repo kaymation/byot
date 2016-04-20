@@ -1,4 +1,5 @@
 class SessionsController < Devise::SessionsController
+  include ApplicationHelper
   clear_respond_to
   respond_to :json
 

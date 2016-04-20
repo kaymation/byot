@@ -6,9 +6,9 @@
 #   cities = City.create([{ name: 'Chicago' }, { name: 'Copenhagen' }])
 #   Mayor.create(name: 'Emanuel', city: cities.first)
 Tiki.create([
-  { name: "Angry Base", thumbnail_path: "nil.png", object_path: "assets/angry_base.x3d", height: 3.08445 },
-  { name: "Stoned Base", thumbnail_path: "nil.png", object_path: "assets/stoned_base.x3d", height: 3.12001},
-  { name: "Squinty Birdie", thumbnail_path: "nil.png", object_path: "assets/squinty_birdie_best.x3d", height: 2.03743},
-  { name: "Albert The Elf", thumbnail_path: "nil.png", object_path: "assets/albert_the_elf.x3d", height: 2.77706 },
-  { name: "Mosquesus", thumbnail_path: "nil.png", object_path: "assets/mosquesus.x3d", height: 2.68382 }
+  { name: "Angry Base", thumbnail_path: "angry_thumbnail.png", object_path: "assets/angry_base.x3d", height: 3.08445, base: true },
+  { name: "Stoned Base", thumbnail_path: "stoned_thumbnail.png", object_path: "assets/stoned_base.x3d", height: 3.12001, base: true },
+  { name: "Squinty Birdie", thumbnail_path: "squinty_thumbnail.png", object_path: "assets/squinty_birdie_best.x3d", height: 2.03743},
+  { name: "Albert The Elf", thumbnail_path: "albert_thumbnail.png", object_path: "assets/albert_the_elf.x3d", height: 2.77706 },
+  { name: "Mosquesus", thumbnail_path: "mosquesus_thumbnail.png", object_path: "assets/mosquesus.x3d", height: 2.68382 }
   ])
