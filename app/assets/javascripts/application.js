@@ -142,10 +142,8 @@ $(function() {
                 });
             } else {
                 var emailLink = $('#appendEmailHere').find('a');
-                if (!emailLink.text().match(data.email)) {
-                    emailLink.prepend(data.email);
+                emailLink.text(navLine(data.email, data.tikicount));
 
-                }
                 removeModal();
                 signedInNav();
                 showBases();
@@ -179,11 +177,7 @@ $(function() {
                 });
             } else {
                 var emailLink = $('#appendEmailHere').find('a');
-                if (!emailLink.text().match(data.email)) {
-                    emailLink.prepend(data.email);
-
-                }
-                // removeModal();
+                emailLink.prepend(data.email);
                 signedInNav();
                 showBases();
             }
@@ -204,6 +198,7 @@ $(function() {
             pole = initialPole;
             $('scene').html("");
             $('#stackList').html("");
+            $('#buyButton').hide();
         }
     });
 
@@ -238,6 +233,9 @@ $(function() {
         });
         $('scene').prepend(to_prepend);
         $('#stackList').prepend("<li>" + $(this).html() + "</li>")
+        if (pole.parts.length == 2) {
+          $('#buyButton').fadeIn(400);
+        }
         removeModal();
 
     });
@@ -245,6 +243,57 @@ $(function() {
     $('#editStack').on('click', '#newHead', function() {
       showHeads();
     });
+
+    $('#buyButton').click(function(){
+      // var toPost = pole.parts.map(function(part){
+      //   return part.asset;
+      // });
+      var request = $.ajax({
+        type: 'get',
+        url: '/orders/new',
+        format: 'html'
+      });
+
+      request.done(function(response){
+        $('#openModal').html(response);
+        fadeBackground();
+      });
+    });
+
+    $('#openModal').on('click', '#orderNowButton', function(e){
+      e.preventDefault();
+      var poleToPost = pole.parts.map(function(part){
+        return part.asset;
+      });
+
+      var orderInfo = {
+        street: $("#street_address").val(),
+        zip: $('#zip').val()
+      };
+
+      var requestBody = {
+        pole: poleToPost,
+        address: orderInfo
+      }
+
+      var request = $.ajax({
+        url: '/orders',
+        method: 'POST',
+        data: requestBody,
+        success: function(data){
+          removeModal();
+          alert("Order successfully place!\nWatch ya mailbox!");
+        },
+        error: function(){
+          if( !$('#openModal').text().match(/Sorry, your order/)){
+            console.log($('#openModal').text());
+            $('#openModal').prepend("<strong>Sorry, your order cannot be processed</strong>");
+          }
+        }
+      });
+
+
+    })
 
     $(window).resize();
 
@@ -345,4 +394,8 @@ var getSignUp = function() {
         });
         $('#openModal').slideDown();
     });
+}
+
+var navLine = function(email, number){
+  return email + ", you have " + number + " tikipoles"
 }

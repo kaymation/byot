@@ -8,4 +8,6 @@ Rails.application.routes.draw do
   get 'tikis/bases', to: 'tikis#bases'
   get 'tikis/heads', to: 'tikis#heads'
 
+  resources :orders, only: [:new, :create, :destroy]
+
 end

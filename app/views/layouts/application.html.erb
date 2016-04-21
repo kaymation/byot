@@ -11,51 +11,54 @@
         <%= csrf_meta_tags %>
     </head>
 
-    <body>
-      <div id="openModal" class="modal-box">
-        <%= render "devise/sessions/login" %>
-      </div>
-      <nav class="top-bar transparent hide-for-small-only" id="nav-menu">
-        <div class="top-bar-left hide-for-small-only">
-          <ul class="vertical medium-horizontal menu">
-              <li>Byot</li>
-          </ul>
+    <body class="content-splash">
+        <div id="openModal" class="modal-box">
+            <%= render "devise/sessions/login" %>
         </div>
+        <nav class="top-bar" id="nav-menu">
+            <div class="top-bar-left hide-for-small-only">
+                <ul class="vertical medium-horizontal menu">
+                    <li><button class="button green">About Us</button></li>
+                </ul>
+            </div>
 
-        <div class="top-bar-right hide-for-small-only">
-          <ul id="signedInButtons"class="vertical medium-horizontal menu" style="display: none;">
-            <li id="appendEmailHere"><%= link_to "#{current_user.try(:email)}, you have 0 tikipoles", "#" %></li>
-            <li><%= link_to 'Sign Out', '#', id: 'signOutButton' %></li>
-          </ul>
-          <ul id="unauthButtons" class="vertical medium-horizontal menu">
-            <li>Sign in to build TikiPole</li>
-          </ul>
+            <div class="top-bar-right hide-for-small-only">
+                <ul id="signedInButtons" class="vertical medium-horizontal menu" style="display: none;">
+                    <li id="appendEmailHere"><%= link_to "#{current_user.try(:email)}, you have #{current_user.try(:pole_count)} tikipoles", "#" %></li>
+                    <li><%= link_to 'Sign Out', '#', id: 'signOutButton' %></li>
+                </ul>
+                <ul id="unauthButtons" class="vertical medium-horizontal menu">
+                    <li>Sign in to build TikiPole</li>
+                </ul>
+            </div>
+        </nav>
+        <div class="container">
+            <div class="row">
+              <div class="not-transparent">
+
+                <div class="large-8 large-centered small-12 column">
+
+                  <%= yield %>
+                </div>
+              </div>
+
+            </div>
+
         </div>
-      </nav>
-      <div class="container">
-        <div class="row">
-          <div class="large-8 large-centered small-12 column">
-
-          <%= yield %>
-        </div>
-
-        </div>
-
-      </div>
-      <% if user_signed_in? %>
-      <script>
-      $(document).ready(function(){
-        signedInNav();
-        showBases();
-      });
-      </script>
-      <% else %>
-      <script>
-      $(document).ready(function(){
-        fadeBackground();
-      });
-      </script>
-      <% end %>
+        <% if user_signed_in? %>
+        <script>
+            $(document).ready(function () {
+                signedInNav();
+                showBases();
+            });
+        </script>
+    <% else %>
+        <script>
+            $(document).ready(function () {
+                fadeBackground();
+            });
+        </script>
+        <% end %>
     </body>
 
 </html>

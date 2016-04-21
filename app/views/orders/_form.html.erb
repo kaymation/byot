@@ -1,0 +1,19 @@
+
+<h3>Just enter your address</h3>
+
+<%= form_tag "" do %>
+
+<div class="field">
+  <%= label_tag 'street_address' %>
+  <%= text_field_tag :street_address %>
+
+</div>
+
+  <div class="field">
+    <%= label_tag 'zip' %>
+    <%= text_field_tag :zip %>
+  </div>
+
+  <%= button_tag "Order now!", id: "orderNowButton", class: "button blue" %>
+
+<% end %>

@@ -1,28 +1,40 @@
 <title>Build your own Tiki-Pole</title>
+
+<div class="row">
+  <div class="large-12 large-centered columns">
+    <h2>Welcome to the TikiBuilder</h2>
+  </div>
+</div>
+
+<div class="row">
+  <div id="creation_area" class="large-8 columns">
     <div class="row">
-        <div class="large-12 large-centered column">
-            <h1>Get ready to build your own tiki pole!</h1>
+      <div class="large-1 small-2 medium-2 columns">
 
+        <div class="stacked-for-large stacked-for-small button-group">
+          <a class="button" id="front"><%= image_tag('frontIcon.png') %></a>
+          <a class="button" id="back"><%= image_tag('backIcon.png') %></a>
+          <a class="button" id="left"><%= image_tag('leftIcon.png') %></a>
+          <a class="button" id="right"><%= image_tag('rightIcon.png') %></a>
         </div>
-
+      </div>
+      <div id="3dspace" class="large-9 columns">
+        <x3d id="tikiView" width='400px' height='350px'>
+          <scene>
+            <PointLight id='point' on='TRUE' intensity='0.9000' color='0.0 0.6 0.0' location='0 10 0.5 ' radius='5.0000'></PointLight>
+          </scene>
+        </x3d>
+        <div class="column large-centered">
+          <button  id="buyButton" class="button green centered" style="display: none;">
+            Buy this Tiki-Pole!
+          <button>
+        </div>
       </div>
 
-    <div id="creation_area" class="row">
-        <div id="3dspace" class="large-5 column">
-            <x3d id="tikiView" width='400px' height='350px'>
-                <scene>
-                    <PointLight id='point' on='TRUE' intensity='0.9000' color='0.0 0.6 0.0' location='0 10 0.5 ' radius='5.0000'></PointLight>
-                </scene>
-            </x3d>
-
-        </div>
-        <div id="editStack" class="large-3 column">
-          <a href="#" id="newHead" style="display: none;">Add Tiki</a>
-          <ul id="stackList">
-
-          </ul>
-        </div>
-        <!-- <div id="buttons" class="small-12 large-3 column">
-            <%= select_tag "tikis", options_for_select(@tikis.map{|tiki| [tiki.name, tiki.object_path, { 'data-height' => tiki.height }]}) %>
-        </div> -->
+      <div id="editStack" class="large-3 columns">
+        <button id="newHead" class="button blue" style="display: none;">Add Tiki</button>
+        <ul id="stackList"></ul>
+      </div>
     </div>
+  </div>
+</div>

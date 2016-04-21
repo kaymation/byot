@@ -45,6 +45,15 @@
 // 1. Global
 // ---------
 
+
+$transparent-green: rgba(110, 165, 59, 0.8);
+$heavier-green: rgba(90, 165, 30, 0.95);
+
+.not-transparent {
+  background: $transparent-green;
+  box-shadow: 0 0 10px 10px $transparent-green;
+}
+
 $global-font-size: 100%;
 $global-width: rem-calc(1200);
 $global-lineheight: 1.5;
@@ -559,8 +568,16 @@ $tooltip-radius: $global-radius;
 // -----------
 
 $topbar-padding: 0.5rem;
-$topbar-background: $light-gray;
-$topbar-submenu-background: $topbar-background;
+$topbar-background: $heavier-green;
+$topbar-submenu-background: $light-gray;
 $topbar-title-spacing: 1rem;
 $topbar-input-width: 200px;
 $topbar-unstack-breakpoint: medium;
+
+.top-bar {
+  box-shadow: 0 0 5px 10px $heavier-green;
+}
+
+.top-bar-right {
+  background-color: $light-gray;
+}
