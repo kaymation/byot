@@ -1,0 +1,138 @@
+//* Variables */
+// Adjust width accordingly (use even #'s)
+$logo-width: 300px;
+// Reduce px value to increase space between logo and menu text
+$logo-padding: $logo-width - 20px;
+// Leave alone
+$logo-margin: - ($logo-width / 2);
+
+$transparent-green: rgba(110, 165, 59, 0.4);
+
+$not-transparent-green: rgba(255, 255, 255, 0.8);
+$button-green: rgba(110, 165, 59, 0.8);
+$button-red: #d06944;
+
+.transparent {
+  background: $transparent-green;
+}
+
+.not-transparent {
+  background: $not-transparent-green;
+}
+
+//* Small Navigation */
+.logo-small {
+  float: right;
+  padding-top: 6px;
+}
+
+.title-bar {
+  height: 525px;
+  padding: 0.5rem;
+}
+
+.title-bar-title {
+  position: relative;
+  top: 10px;
+}
+
+//* Medium-Up Navigation */
+@media only screen and (min-width: 40rem) {
+
+  .logo-wrapper {
+    position: relative;
+    height: 300 px;
+
+  .logo-wrapper img {
+    height: 500 px;
+  }
+
+    .logo {
+      left: 50%;
+      margin-left: $logo-margin;
+      position: absolute;
+      right: 50%;
+      top: -5.5px;
+      width: $logo-width;
+    }
+  }
+
+  // Right part
+  .top-bar-right {
+    padding-left: $logo-padding;
+    width: 50%;
+
+    ul {
+      background: transparent;
+      float: left;
+    }
+
+    a {
+      font-size: larger;
+      font-weight: bold;
+    }
+  }
+
+  // Left part
+  .top-bar-left {
+    padding-right: $logo-padding;
+    width: 50%;
+
+    ul {
+      background: transparent;
+      float: right;
+    }
+
+    a {
+      font-size: larger;
+      font-weight: bold;
+    }
+  }
+}
+
+.pagination a {
+  display: inline;
+}
+
+ul {
+  list-style-type: none;
+}
+
+.mobile-menu {
+  text-align: center;
+
+  .mobile-menu li {
+    display: inline;
+    padding: 10px;
+  }
+}
+
+.button {
+  background: $button-green;
+  display: inline-block;
+  margin: 8px;
+  font-weight: bold;
+}
+
+.button:hover,
+.button:focus {
+  background: $button-green;
+}
+
+.button.success {
+  background: $button-green;
+  background-color: $button-green;
+}
+
+.button.success:hover {
+  background: $button-green;
+}
+
+.button.alert {
+  background: $button-red;
+  background-color: $button-red;
+}
+
+.button.alert:hover {
+  background: $button-red;
+}

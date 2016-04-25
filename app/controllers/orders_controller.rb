@@ -12,7 +12,7 @@ class OrdersController < ApplicationController
         tiki = Tiki.find_by(object_path: part)
         OrderTiki.create(order: @order, tiki: tiki, position: pos)
       end
-      render json: { success: true }
+      render json: { success: true, email: current_user.email, count: current_user.pole_count }
     else
       throw Exception
     end

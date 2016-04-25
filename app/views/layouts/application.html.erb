@@ -4,7 +4,7 @@
         <meta charset="utf-8"/>
         <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 
-        <title><%= content_for?(:title) ? yield(:title) : "Build Your Own Tiki-Pole" %></title>
+        <title><%= content_for?(:title) ? yield(:title) : "TotemBuilder: Stack to Your Heart's Content" %></title>
 
         <%= stylesheet_link_tag    "application" %>
         <%= javascript_include_tag "application", 'data-turbolinks-track' => true %>
@@ -16,31 +16,40 @@
             <%= render "devise/sessions/login" %>
         </div>
         <nav class="top-bar" id="nav-menu">
+
+            <div class="logo-wrapper hide-for-small-only">
+                <div class="logo">
+                    <%= image_tag("sjw_friendly_logo.png") %>
+                </div>
+            </div>
+
             <div class="top-bar-left hide-for-small-only">
                 <ul class="vertical medium-horizontal menu">
-                    <li><button class="button green">About Us</button></li>
+                    <li>
+                        <button class="button green">About Us</button>
+                    </li>
                 </ul>
             </div>
 
             <div class="top-bar-right hide-for-small-only">
                 <ul id="signedInButtons" class="vertical medium-horizontal menu" style="display: none;">
-                    <li id="appendEmailHere"><%= link_to "#{current_user.try(:email)}, you have #{current_user.try(:pole_count)} tikipoles", "#" %></li>
+                    <li id="appendEmailHere"><%= link_to "#{current_user.try(:email)}, you have #{current_user.try(:pole_count)} totempoles", "#" %></li>
                     <li><%= link_to 'Sign Out', '#', id: 'signOutButton' %></li>
                 </ul>
                 <ul id="unauthButtons" class="vertical medium-horizontal menu">
-                    <li>Sign in to build TikiPole</li>
+                    <li>Sign in to build TotemPole</li>
                 </ul>
             </div>
         </nav>
         <div class="container">
             <div class="row">
-              <div class="not-transparent">
+                <div class="not-transparent">
 
-                <div class="large-8 large-centered small-12 column">
+                    <div class="large-8 large-centered small-12 column">
 
-                  <%= yield %>
+                        <%= yield %>
+                    </div>
                 </div>
-              </div>
 
             </div>
 

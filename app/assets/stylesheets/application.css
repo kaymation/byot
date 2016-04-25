@@ -98,3 +98,21 @@
 .top-bar-right {
   right: 60px;
 }
+
+.tikiStackElement {
+  height: 50px;
+}
+
+.tikiStackElement img {
+  height: 100%;
+  width: auto;
+  display: inline;
+}
+
+#stackList {
+  list-style-type: none;
+}
+
+#stackList li{
+  padding-bottom: 10px;
+}

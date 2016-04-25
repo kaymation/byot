@@ -10,4 +10,9 @@ class TikisController < ApplicationController
     render partial: 'head_select'
   end
 
+  def edit_head
+    @heads = Tiki.where(bases: false)
+    render partial: 'head_swap_select'
+  end
+
 end

@@ -1,38 +1,43 @@
-<title>Build your own Tiki-Pole</title>
+<title>Build your own Totem-Pole</title>
 
 <div class="row">
   <div class="large-12 large-centered columns">
-    <h2>Welcome to the TikiBuilder</h2>
+  <br/>
   </div>
 </div>
 
 <div class="row">
-  <div id="creation_area" class="large-8 columns">
+  <div id="creation_area" class="large-12 columns">
     <div class="row">
-      <div class="large-1 small-2 medium-2 columns">
+      <div class="large-2 small-2 medium-2 columns">
 
-        <div class="stacked-for-large stacked-for-small button-group">
+        <div class="stacked-for-large button-group">
           <a class="button" id="front"><%= image_tag('frontIcon.png') %></a>
           <a class="button" id="back"><%= image_tag('backIcon.png') %></a>
           <a class="button" id="left"><%= image_tag('leftIcon.png') %></a>
           <a class="button" id="right"><%= image_tag('rightIcon.png') %></a>
         </div>
       </div>
-      <div id="3dspace" class="large-9 columns">
+      <div id="3dspace" class="large-6 columns">
         <x3d id="tikiView" width='400px' height='350px'>
           <scene>
+            <Viewpoint id="front" position="0 0 0" orientation="0 -1 0 0" description="camera"></Viewpoint>
+            <Viewpoint id="back" position="0 0 0" orientation="0 1 0 0" description="camera"></Viewpoint>
+            <Viewpoint id= "left" position="7.07432 1.40557 -0.48620" orientation="0.06728 0.99605 0.05786 1.65647" description="camera"></Viewpoint>
+            <Viewpoint id="right" position="0 0 0" orientation="1 0 0 0" description="camera"></Viewpoint>
+
             <PointLight id='point' on='TRUE' intensity='0.9000' color='0.0 0.6 0.0' location='0 10 0.5 ' radius='5.0000'></PointLight>
           </scene>
         </x3d>
         <div class="column large-centered">
           <button  id="buyButton" class="button green centered" style="display: none;">
-            Buy this Tiki-Pole!
+            Buy this TotemPole!
           <button>
         </div>
       </div>
 
-      <div id="editStack" class="large-3 columns">
-        <button id="newHead" class="button blue" style="display: none;">Add Tiki</button>
+      <div id="editStack" class="large-4 columns">
+        <button id="newHead" class="button blue" style="display: none;">Add Totem</button>
         <ul id="stackList"></ul>
       </div>
     </div>

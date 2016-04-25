@@ -52,6 +52,7 @@ $heavier-green: rgba(90, 165, 30, 0.95);
 .not-transparent {
   background: $transparent-green;
   box-shadow: 0 0 10px 10px $transparent-green;
+  padding-top: 30px;
 }
 
 $global-font-size: 100%;
@@ -567,7 +568,7 @@ $tooltip-radius: $global-radius;
 // 36. Top Bar
 // -----------
 
-$topbar-padding: 0.5rem;
+$topbar-padding: 2.5rem;
 $topbar-background: $heavier-green;
 $topbar-submenu-background: $light-gray;
 $topbar-title-spacing: 1rem;
@@ -576,8 +577,9 @@ $topbar-unstack-breakpoint: medium;
 
 .top-bar {
   box-shadow: 0 0 5px 10px $heavier-green;
+  height: 150px;
 }
 
 .top-bar-right {
-  background-color: $light-gray;
+  background-color: $heavier-green;
 }

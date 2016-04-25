@@ -30,13 +30,14 @@ initialPole = {
             result = heights.reduce(function(a, b) {
                 return a + b;
             });
-            console.log(result);
             return result;
         }
     }
 };
 
 pole = initialPole;
+
+
 
 var grayness = " <div id='grayness' class='modal-overlay js-modal-close'></div>"
 
@@ -69,7 +70,6 @@ $(function() {
 
         // console.log($('#tikis :selected').attr('data-height'));
         var obj_height = parseFloat($('#tikis :selected').attr('data-height'));
-        console.log(obj_height);
         pole.parts.push({
             asset: obj,
             height: obj_height
@@ -80,11 +80,6 @@ $(function() {
         document.getElementById('tikiView').runtime.showAll();
     })
 
-
-    $('scene').on('load', 'inline', function(event) {
-        console.log("nonsenz");
-        document.getElementById('tikiView').runtime.showAll();
-    });
 
     $(window).resize(function() {
         $(".modal-box").css({
@@ -117,7 +112,6 @@ $(function() {
 
     $('#openModal').on('submit', 'form#new_user', function(event) {
         event.preventDefault();
-        console.log("submit clicked");
         var body = {
             email: $("#user_email").val(),
             password: $("#user_password").val(),
@@ -153,7 +147,6 @@ $(function() {
 
     $('#openModal').on('submit', 'form#sign_in_user', function(event) {
         event.preventDefault();
-        console.log("submit clicked");
         var body = {
             email: $("#user_email").val(),
             password: $("#user_password").val(),
@@ -216,7 +209,7 @@ $(function() {
             height: height
         });
         $('scene').prepend(to_prepend);
-        $('#stackList').prepend("<li>" + $(this).html() + "</li>")
+        $('#stackList').prepend(stackElement($(this).find('img'), pole.parts.length, true))
         $('#newHead').show();
         $('#openModal').slideUp(function() {
             $('#openModal').html(lastGuidance);
@@ -232,7 +225,7 @@ $(function() {
             height: height
         });
         $('scene').prepend(to_prepend);
-        $('#stackList').prepend("<li>" + $(this).html() + "</li>")
+        $('#stackList').prepend(stackElement($(this).find('img'), pole.parts.length, false))
         if (pole.parts.length == 2) {
           $('#buyButton').fadeIn(400);
         }
@@ -245,9 +238,6 @@ $(function() {
     });
 
     $('#buyButton').click(function(){
-      // var toPost = pole.parts.map(function(part){
-      //   return part.asset;
-      // });
       var request = $.ajax({
         type: 'get',
         url: '/orders/new',
@@ -282,11 +272,14 @@ $(function() {
         data: requestBody,
         success: function(data){
           removeModal();
-          alert("Order successfully place!\nWatch ya mailbox!");
+          alert("Order successfully placed!\nWatch ya mailbox!");
+          var emailLink = $('#appendEmailHere').find('a');
+
+          emailLink.text(navLine(data.email, data.count));
+
         },
         error: function(){
           if( !$('#openModal').text().match(/Sorry, your order/)){
-            console.log($('#openModal').text());
             $('#openModal').prepend("<strong>Sorry, your order cannot be processed</strong>");
           }
         }
@@ -322,7 +315,7 @@ var signedOutNav = function() {
 }
 
 
-var elementForTiki = function(asset) {
+var elementForTiki = function(asset, index, height) {
     var openTag = '<transform id="tiki-' + (pole.parts.length + 1) + '" translation="0 ' + pole.totalHeight() + ' 0"> '
     var inline = '<inline url="' + asset + '"></inline>';
     var closer = '</transform>'
@@ -395,7 +388,6 @@ var getSignUp = function() {
         $('#openModal').slideDown();
     });
 }
-
 var navLine = function(email, number){
-  return email + ", you have " + number + " tikipoles"
+  return email + ", you have " + number + " totempoles"
 }
