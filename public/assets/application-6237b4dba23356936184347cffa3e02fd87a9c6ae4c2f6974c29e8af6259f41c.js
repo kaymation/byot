@@ -20982,30 +20982,83 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
   };
 
 }).call(this);
+var showAdminView = function(){
+  var request = $.ajax({
+    url: '/orders',
+    format: 'html',
+    type: 'GET'
+  });
+
+  request.done(function(data){
+    $('#openModal').html(data)
+    $('#openModal').append(closer);
+    fadeBackground()
+  });
+}
+
+var showAdminBar = function(){
+  $('#adminViewButton').parent().show();
+}
+
+$(function(){
+  $('#openModal').on('click', '.delete', function() {
+
+    var id = $(this).attr('id')
+
+    var request = $.ajax({
+      type: 'delete',
+      url: "/orders/" + id
+    });
+    fadeThis = $("#" + id).parent().parent();
+    request.done(function(response){
+      if(response.success == true){
+        debugger;
+        fadeThis.fadeOut(500);
+      } else {
+        alert("Sumin went wrong\n surprise attack killed him in his sleep at night")
+      }
+    });
+  });
+  $('#openModal').on('click', '.filled', function() {
+    var body = {
+      order: {
+        id: $(this).attr('id')
+      }
+    }
+
+    var request = $.ajax({
+      type: 'GET',
+      url: '/orders/fill',
+      data: body
+    });
+    $(this).addClass('success')
+    $(this).text('Yay!')
+  });
+});
 var stackElement = function(thumbnail, index, base) {
-  var openTag = "<div class='tikiStackElement' id='" + index + "'>";
-  var thumb = "<img src='"+thumbnail.attr('src')+"'>";
+    var openTag = "<div class='tikiStackElement' id='" + index + "'>";
+    var thumb = "<img src='" + thumbnail.attr('src') + "'>";
 
-  var editButton = "<img class='edit' src='/assets/editIcon.png'>";
-  if(base){
-    var deleteButton = "";
-  }else{
+    var editButton = "<img class='edit' src='/assets/editIcon.png'>";
+    if (base) {
+        var deleteButton = "";
+    } else {
 
-    var deleteButton = "<img class='delete' src='/assets/deleteIcon.png'>";
-  }
-  var close = '</div>';
-  return "<li>" + openTag + thumb + editButton + deleteButton + close + "</li>";
+        var deleteButton = "<img class='delete' src='/assets/deleteIcon.png'>";
+    }
+    var close = '</div>';
+    return "<li>" + openTag + thumb + editButton + deleteButton + close + "</li>";
 
 }
 
-var reloadTikiPole = function(parts){
-  $('transform').remove();
-  var runningHeight = 0;
-  pole.parts.forEach(function(part, index){
-    var newHead = elementForRebuildTiki(part.asset, index+1, runningHeight);
-    runningHeight += parseFloat(part.height)
-    $('scene').prepend(newHead);
-  });
+var reloadTikiPole = function(parts) {
+    $('transform').remove();
+    var runningHeight = 0;
+    pole.parts.forEach(function(part, index) {
+        var newHead = elementForRebuildTiki(part.asset, index + 1, runningHeight);
+        runningHeight += parseFloat(part.height)
+        $('scene').prepend(newHead);
+    });
 }
 
 var elementForRebuildTiki = function(asset, index, height) {
@@ -21015,25 +21068,68 @@ var elementForRebuildTiki = function(asset, index, height) {
     return openTag + inline + closer;
 };
 
-$(function(){
+var swapHead = function(index) {
+    if (index > 0) {
+        showReplacementHeads(index);
+    }
+};
 
-$('#editStack').on('click', '.delete', function() {
-  if (confirm('Removed this totem from the stack?')) {
-    id = $(this).parent().prop('id') - 1;
-    pole.parts.splice(id, 1);
-    reloadTikiPole();
-    $(this).parent().parent().remove();
-    var items = $('#stackList').find('li').find('.tikiStackElement');
-    $.each(items, function(index, item){
-      console.log(typeof(item));
-      item.id = items.length - (index);
-    })
-  }
-});
+var showReplacementHeads = function(index) {
+    var request = $.ajax({
+        url: '/tikis/edithead',
+        type: 'GET',
+        format: 'html',
+        data: {
+            index: index
+        }
+    });
 
-$('#editStack').on('click', '.edit', function() {
+    request.done(function(result) {
+        $('#openModal').slideUp(function() {
 
-});
+            $('#openModal').html(result);
+            $('#openModal').append("<br/><button id='modalClose' class='button blue float-center'>Nevermind</button>");
+        });
+        // fadeBackground();
+        $('#openModal').slideDown();
+    });
+};
+
+$(function() {
+
+    $('#editStack').on('click', '.delete', function() {
+        if (confirm('Removed this totem from the stack?')) {
+            var id = $(this).parent().prop('id') - 1;
+            pole.parts.splice(id, 1);
+            reloadTikiPole();
+            $(this).parent().parent().remove();
+            var items = $('#stackList').find('li').find('.tikiStackElement');
+            $.each(items, function(index, item) {
+                console.log(typeof(item));
+                item.id = items.length - (index);
+            })
+        }
+    });
+
+    $('#editStack').on('click', '.edit', function() {
+        var id = $(this).parent().prop('id') - 1;
+        swapHead(id)
+    });
+
+    $('#openModal').on('click', '.head_swap_option', function() {
+        var index = $(this).parent().prop('id');
+        var obj = $(this).find('img').attr('data-obj');
+        var height = $(this).find('img').attr('data-height');
+        pole.parts[index] = {
+            asset: obj,
+            height: height
+        }
+        removeModal();
+        var thumb = $(this).find('img').attr('src')
+        debugger;
+        $('#stackList').find('#' + (parseInt(index) + 1)).find('img')[0].src = thumb
+        reloadTikiPole();
+    });
 
 });
 
@@ -26684,7 +26780,7 @@ initialPole = {
 
 pole = initialPole;
 
-
+var closer = "<br/><button id='modalClose' class='button blue float-center'>Done!</button>"
 
 var grayness = " <div id='grayness' class='modal-overlay js-modal-close'></div>"
 
@@ -26698,7 +26794,7 @@ var fadeBackground = function() {
 }
 
 var removeModal = function() {
-    $('#grayness').css('opacity', 0);
+    // $('#grayness').css('opacity', 0);
     $('#grayness').remove();
     $('#openModal').fadeOut(500);
 }
@@ -26817,9 +26913,12 @@ $(function() {
                 });
             } else {
                 var emailLink = $('#appendEmailHere').find('a');
-                emailLink.prepend(data.email);
+                emailLink.text(navLine(data.email, data.count));
                 signedInNav();
                 showBases();
+                if(data.admin == true){
+                  showAdminBar();
+                }
             }
         });
     });
@@ -26827,13 +26926,14 @@ $(function() {
     $('#signOutButton').click(function() {
         if (confirm('Are you sure you want to sign out?\nAny progress will be lost')) {
             var request = $.ajax({
-                type: 'delete',
+                type: 'get',
                 url: '/users/sign_out'
             });
 
             request.done(function() {
                 getSignIn();
                 signedOutNav();
+                $('#adminViewButton').parent().hide();
             });
             pole = initialPole;
             $('scene').html("");
@@ -26873,10 +26973,11 @@ $(function() {
         });
         $('scene').prepend(to_prepend);
         $('#stackList').prepend(stackElement($(this).find('img'), pole.parts.length, false))
-        if (pole.parts.length == 2) {
+        if (pole.parts.length > 2) {
           $('#buyButton').fadeIn(400);
         }
         removeModal();
+        $('#grayness').remove();
 
     });
 
@@ -26933,7 +27034,8 @@ $(function() {
       });
 
 
-    })
+    });
+    $('#adminViewButton').click(showAdminView);
 
     $(window).resize();
 
