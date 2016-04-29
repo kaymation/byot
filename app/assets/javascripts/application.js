@@ -41,7 +41,7 @@ var closer = "<br/><button id='modalClose' class='button blue float-center'>Done
 
 var grayness = " <div id='grayness' class='modal-overlay js-modal-close'></div>"
 
-var lastGuidance = "<strong class='text-center'>Great! Now click the 'Add Tiki' button to build your pole!</strong> \
+var lastGuidance = "<strong class='text-center'>Great! Now click the 'Add Totem' button to build your pole!</strong> \
                   <br/><button id='modalClose' class='button blue float-center'>I got it!</button>"
 
 var fadeBackground = function() {

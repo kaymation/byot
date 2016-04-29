@@ -28,7 +28,6 @@ $(function(){
     fadeThis = $("#" + id).parent().parent();
     request.done(function(response){
       if(response.success == true){
-        debugger;
         fadeThis.fadeOut(500);
       } else {
         alert("Sumin went wrong\n surprise attack killed him in his sleep at night")

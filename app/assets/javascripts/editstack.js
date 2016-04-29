@@ -89,7 +89,6 @@ $(function() {
         }
         removeModal();
         var thumb = $(this).find('img').attr('src')
-        debugger;
         $('#stackList').find('#' + (parseInt(index) + 1)).find('img')[0].src = thumb
         reloadTikiPole();
     });
