@@ -234,7 +234,7 @@ $(function() {
           $('#buyButton').fadeIn(400);
         }
         removeModal();
-        $('#grayness').remove();
+        $('.modal-overlay').remove();
 
     });
 
