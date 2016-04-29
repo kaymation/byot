@@ -1,0 +1,29 @@
+<div class="row text-center">
+  <h3>Welcome Admin <%= current_user.email %>, viewing all orders:</h3>
+</div>
+
+<% @orders.each do |order| %>
+<div class="row">
+  <div class="small-6 small-centered columns">
+    <p>Order from <%= order.user.email %> </p>
+    <p>
+      addr: <%= order.street_address %>, <%= order.zip %>
+    </p>
+    <p>
+      Sequence:
+    </p>
+    <ul>
+      <% order.order_tikis.sort_by{|t| t.position}.each do |order_tiki| %>
+        <li>
+          <%= order_tiki.tiki.name %>
+        </li>
+    <% end %>
+  </ul>
+  </div>
+  <div class="small-6 small-centered columns">
+    <%= button_tag "Filled!", id: order.id, class: "button fill" %>
+    <%= button_tag "Delete", id: order.id, class: "button delete alert" %>
+    <!-- Go to app.js, put logic to access and display dis view -->
+  </div>
+</div>
+<% end %>

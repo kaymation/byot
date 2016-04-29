@@ -1,6 +1,8 @@
 class RegistrationsController < Devise::RegistrationsController
   include ApplicationHelper
   # wrap_parameters :user
+  skip_before_filter :verify_authenticity_token
+
   respond_to :json
 
   def new
@@ -17,6 +19,7 @@ class RegistrationsController < Devise::RegistrationsController
        render :json => {:success => true, email: current_user.email, tikicount: current_user.pole_count }
      else
        set_flash_message :notice, :"signed_up_but_#{resource.inactive_message}" if is_navigational_format?
+       sign_up(resource_name, resource)
        expire_session_data_after_sign_in!
        render :json => {:success => true, email: current_user.email, tikicount: current_user.pole_count }
      end

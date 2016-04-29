@@ -37,7 +37,7 @@ initialPole = {
 
 pole = initialPole;
 
-
+var closer = "<br/><button id='modalClose' class='button blue float-center'>Done!</button>"
 
 var grayness = " <div id='grayness' class='modal-overlay js-modal-close'></div>"
 
@@ -51,7 +51,7 @@ var fadeBackground = function() {
 }
 
 var removeModal = function() {
-    $('#grayness').css('opacity', 0);
+    // $('#grayness').css('opacity', 0);
     $('#grayness').remove();
     $('#openModal').fadeOut(500);
 }
@@ -170,9 +170,12 @@ $(function() {
                 });
             } else {
                 var emailLink = $('#appendEmailHere').find('a');
-                emailLink.prepend(data.email);
+                emailLink.text(navLine(data.email, data.count));
                 signedInNav();
                 showBases();
+                if(data.admin == true){
+                  showAdminBar();
+                }
             }
         });
     });
@@ -180,13 +183,14 @@ $(function() {
     $('#signOutButton').click(function() {
         if (confirm('Are you sure you want to sign out?\nAny progress will be lost')) {
             var request = $.ajax({
-                type: 'delete',
+                type: 'get',
                 url: '/users/sign_out'
             });
 
             request.done(function() {
                 getSignIn();
                 signedOutNav();
+                $('#adminViewButton').parent().hide();
             });
             pole = initialPole;
             $('scene').html("");
@@ -226,10 +230,11 @@ $(function() {
         });
         $('scene').prepend(to_prepend);
         $('#stackList').prepend(stackElement($(this).find('img'), pole.parts.length, false))
-        if (pole.parts.length == 2) {
+        if (pole.parts.length > 2) {
           $('#buyButton').fadeIn(400);
         }
         removeModal();
+        $('#grayness').remove();
 
     });
 
@@ -286,7 +291,8 @@ $(function() {
       });
 
 
-    })
+    });
+    $('#adminViewButton').click(showAdminView);
 
     $(window).resize();
 

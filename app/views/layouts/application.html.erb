@@ -28,6 +28,7 @@
                     <li>
                         <button class="button green">About Us</button>
                     </li>
+                    <li style="display: none;"><button id="adminViewButton" class="button green">Admin Options</button></li>
                 </ul>
             </div>
 
@@ -60,6 +61,9 @@
                 signedInNav();
                 showBases();
             });
+          <% if current_user.admin? %>
+            showAdminBar();
+          <% end %>
         </script>
     <% else %>
         <script>

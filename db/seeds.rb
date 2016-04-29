@@ -13,3 +13,5 @@ Tiki.create([
   { name: "Mosquesus", thumbnail_path: "mosquesus_thumbnail.png", object_path: "assets/mosquesus.x3d", height: 2.68382 },
   { name: "Silly the Goose", thumbnail_path: "silly_thumbnail.png", object_path: "assets/silly_the_goose.x3d", height: 2.97011}
   ])
+
+  User.create(email: "admin@quig.com", password: "password", password_confirmation: "password", admin: true)
