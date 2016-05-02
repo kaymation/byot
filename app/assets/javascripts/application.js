@@ -190,11 +190,11 @@ $(function() {
                 getSignIn();
                 signedOutNav();
                 $('#adminViewButton').parent().hide();
+                pole = initialPole;
+                $('transform').remove();
+                $('#stackList').html("");
+                $('#buyButton').hide();
             });
-            pole = initialPole;
-            $('scene').html("");
-            $('#stackList').html("");
-            $('#buyButton').hide();
         }
     });
 
