@@ -21012,7 +21012,6 @@ $(function(){
     fadeThis = $("#" + id).parent().parent();
     request.done(function(response){
       if(response.success == true){
-        debugger;
         fadeThis.fadeOut(500);
       } else {
         alert("Sumin went wrong\n surprise attack killed him in his sleep at night")
@@ -21126,7 +21125,6 @@ $(function() {
         }
         removeModal();
         var thumb = $(this).find('img').attr('src')
-        debugger;
         $('#stackList').find('#' + (parseInt(index) + 1)).find('img')[0].src = thumb
         reloadTikiPole();
     });
@@ -26784,7 +26782,7 @@ var closer = "<br/><button id='modalClose' class='button blue float-center'>Done
 
 var grayness = " <div id='grayness' class='modal-overlay js-modal-close'></div>"
 
-var lastGuidance = "<strong class='text-center'>Great! Now click the 'Add Tiki' button to build your pole!</strong> \
+var lastGuidance = "<strong class='text-center'>Great! Now click the 'Add Totem' button to build your pole!</strong> \
                   <br/><button id='modalClose' class='button blue float-center'>I got it!</button>"
 
 var fadeBackground = function() {
@@ -26794,8 +26792,7 @@ var fadeBackground = function() {
 }
 
 var removeModal = function() {
-    // $('#grayness').css('opacity', 0);
-    $('#grayness').remove();
+    $('.modal-overlay').remove();
     $('#openModal').fadeOut(500);
 }
 
@@ -26977,7 +26974,7 @@ $(function() {
           $('#buyButton').fadeIn(400);
         }
         removeModal();
-        $('#grayness').remove();
+        $('.modal-overlay').remove();
 
     });
 

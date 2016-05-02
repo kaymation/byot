@@ -16,7 +16,7 @@ feature "user has all basic authorization functionality", js: true do
     fill_in 'Email', with: @email
     fill_in 'Password', with: @password
     click_button "Log in"
-    expect(page).to have_content("#{@email},")
+    expect(page).to_not have_content("Woaaa there")
   end
 
   scenario "user logs out" do
@@ -42,7 +42,7 @@ feature "user has all basic authorization functionality", js: true do
 
     click_button "Sign up"
 
-    expect(page).to have_content("#{@new_user_email},")
+    expect(page).to_not have_content("Already have an")
 
   end
 end

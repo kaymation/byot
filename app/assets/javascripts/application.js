@@ -51,8 +51,7 @@ var fadeBackground = function() {
 }
 
 var removeModal = function() {
-    // $('#grayness').css('opacity', 0);
-    $('#grayness').remove();
+    $('.modal-overlay').remove();
     $('#openModal').fadeOut(500);
 }
 
